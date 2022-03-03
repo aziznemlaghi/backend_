@@ -1,32 +1,39 @@
- import {Body, Controller, Delete, Get, Param, Patch, Post} from '@nestjs/common';
+ import {Body, Controller, Delete, Get, Param, Patch, Post, UseGuards} from '@nestjs/common';
  import {ServiceService} from "./service.service";
  import {ServiceDocument} from "./service.schema";
+ import {ApiImplicitParam} from "@nestjs/swagger/dist/decorators/api-implicit-param.decorator";
+ import {JwtGuard} from "../auth/guards/jwt.guards";
 
 @Controller('service')
 export class ServiceController {
 
     constructor(private serviceService : ServiceService) {}
 
-    @Post()
+    @UseGuards(JwtGuard)
+    @Post('add-Service')
     createService(
         @Body('name') name : string,
         @Body('price') price :number,
-        @Body('description') description? : string,
+        @Body('description') description : string,
     ):Promise<ServiceDocument>{
         return this.serviceService.createService(name, price, description);
     }
 
-    @Get()
+
+    @UseGuards(JwtGuard)
+    @Get('findServices')
     findAllServices():Promise<ServiceDocument[]>{
         return this.serviceService.findAllServices();
     }
 
-    @Get(':id')
+    @UseGuards(JwtGuard)
+    @Get('findService/:id')
     findService(@Param('id')id:string):Promise<ServiceDocument>{
         return this.serviceService.findService(id);
     }
 
-    @Patch(':id')
+    @UseGuards(JwtGuard)
+    @Patch('update/:id')
     updateService(
         @Param('id') id: string,
         @Body('name') name: string,
@@ -36,8 +43,10 @@ export class ServiceController {
         return this.serviceService.updateService(id, name, price, description);
     }
 
-    @Delete(':id')
+    @UseGuards(JwtGuard)
+    @Delete('delete/:id')
     deleteService(@Param('id') id: string) {
         return this.serviceService.deleteService(id);
     }
+
 }

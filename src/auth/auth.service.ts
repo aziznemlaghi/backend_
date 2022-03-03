@@ -22,7 +22,7 @@ export class AuthService {
         if(existingUser) return 'email taken !';
         const hashedPassword = await this.hashPassword(password);
         const newUser = await this.userService.create(name,email,hashedPassword);
-        return this.userService._getUserDetails(newUser);
+        return newUser;
     }
 
     async doesPasswordMatch(password : string,hashedPassword : string):
