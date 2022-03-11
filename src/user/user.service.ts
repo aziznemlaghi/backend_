@@ -3,6 +3,7 @@ import {InjectModel} from "@nestjs/mongoose";
 import {UserDocument} from "./user.schema";
 import {Model} from 'mongoose';
 import {UserDetails} from "./user.interface";
+import {ServiceDocument} from "../service/service.schema";
 @Injectable()
 export class UserService {
     constructor(@InjectModel('User') private  readonly  userModel:Model<UserDocument>) {
@@ -14,6 +15,7 @@ export class UserService {
             id: user.id,
             name : user.name,
             email : user.email,
+            role : user.role,
         }
     }
 
@@ -34,5 +36,9 @@ export class UserService {
             password : hashedPassword,
         });
         return  newUser.save()
+    }
+
+    async findAllUsers():Promise<UserDocument[]>{
+        return this.userModel.find().exec();
     }
 }
