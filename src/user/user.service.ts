@@ -4,6 +4,7 @@ import {UserDocument} from "./user.schema";
 import {Model} from 'mongoose';
 import {UserDetails} from "./user.interface";
 import {ServiceDocument} from "../service/service.schema";
+import {use} from "passport";
 @Injectable()
 export class UserService {
     constructor(@InjectModel('User') private  readonly  userModel:Model<UserDocument>) {
@@ -13,6 +14,7 @@ export class UserService {
     _getUserDetails(user:UserDocument):UserDetails{
         return {
             id: user.id,
+            phone : user.phone,
             name : user.name,
             email : user.email,
             role : user.role,
@@ -29,10 +31,11 @@ export class UserService {
         return this._getUserDetails(user);
     }
 
-    async create(name : string, email:string,hashedPassword:string):Promise<UserDocument>{
+    async create(name : string,phone : number, email:string,hashedPassword:string):Promise<UserDocument>{
         const newUser = new this.userModel({
             name,
             email,
+            phone,
             password : hashedPassword,
         });
         return  newUser.save()

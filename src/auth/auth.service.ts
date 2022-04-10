@@ -17,11 +17,11 @@ export class AuthService {
     }
 
     async register(user: Readonly<NewUserDto>) : Promise<UserDetails |any>{
-        const {name,email,password} = user;
+        const {name,phone,email,password} = user;
         const existingUser = await this.userService.findByEmail(email);
         if(existingUser) return 'email taken !';
         const hashedPassword = await this.hashPassword(password);
-        const newUser = await this.userService.create(name,email,hashedPassword);
+        const newUser = await this.userService.create(name,phone ,email,hashedPassword);
         return newUser;
     }
 
