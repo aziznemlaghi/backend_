@@ -10,7 +10,8 @@ export class AuthController {
     constructor(private authService : AuthService) {}
 
     @Post('register')
-        register(@Body() user : NewUserDto):Promise<UserDetails | null>{
+    @HttpCode(HttpStatus.OK)
+    register(@Body() user : NewUserDto):Promise<UserDetails | null>{
             return this.authService.register(user);
         }
 
