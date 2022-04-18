@@ -11,6 +11,7 @@ export class Service{
     price : number;
     @Prop()
     description : string;
+
 }
 
 export const ServiceSchema = SchemaFactory.createForClass(Service);

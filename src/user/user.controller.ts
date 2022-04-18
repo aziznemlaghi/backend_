@@ -1,4 +1,4 @@
-import {Controller, Get, Param, UseGuards} from '@nestjs/common';
+import {Body, Controller, Get, Param, Patch, UseGuards} from '@nestjs/common';
 import {UserService} from "./user.service";
 import {UserDetails} from "./user.interface";
 import {Roles} from "../auth/decorators/roles.decorator";
@@ -12,18 +12,34 @@ import {RolesGuard} from "../auth/guards/roles.guard";
 export class UserController {
     constructor(private UserService : UserService) {
     }
+
+    /**@Roles(Role.ADMIN,Role.USER)
+     @UseGuards(JwtGuard,RolesGuard)*/
+    @Get('findUsers')
+    findAllServices():Promise<UserDocument[]>{
+        return this.UserService.findAllUsers();
+
+    }
+
+
+
+    @Patch('updateUser/:id')
+    updateUser(
+        @Param('id') id: string,
+        @Body('name') name: string,
+        @Body('phone') phone: number,
+        @Body('email') email?: string,
+    ): Promise<UserDocument> {
+        return this.UserService.updateUser(id, name, phone, email);
+    }
+
+
+
     @Roles(Role.ADMIN)
     @UseGuards(JwtGuard,RolesGuard)
     @Get(':id')
     getUser(@Param('id') id : string):Promise<  UserDetails |null>{
         return this.UserService.findById(id);
-    }
-
-    @Roles(Role.ADMIN)
-    @UseGuards(JwtGuard,RolesGuard)
-    @Get('AllUsers')
-    findAllUsers():Promise<UserDocument[]>{
-        return this.UserService.findAllUsers();
     }
 }
 
