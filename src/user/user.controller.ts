@@ -18,8 +18,8 @@ export class UserController {
     @Get('findUsers')
     findAllServices():Promise<UserDocument[]>{
         return this.UserService.findAllUsers();
-
     }
+
 
 
 

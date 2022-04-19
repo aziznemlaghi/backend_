@@ -12,8 +12,8 @@ export class ReservationController {
 
   constructor(private reservationService : ReservationService) {}
 
-  /**@Roles(Role.ADMIN)
-  @UseGuards(JwtGuard,RolesGuard)*/
+  @Roles(Role.ADMIN)
+  @UseGuards(JwtGuard,RolesGuard)
   @Post('add')
   createReservation(
       @Body('user') user : string,
@@ -23,7 +23,9 @@ export class ReservationController {
   ):Promise<ReservationDocument>{
     return this.reservationService.createReservation(user, service, date,status);
   }
-/**
+
+
+/** 
   @Roles(Role.ADMIN,Role.USER)
   @UseGuards(JwtGuard,RolesGuard)*/
   @Get('findReservations')
@@ -31,12 +33,21 @@ export class ReservationController {
     return this.reservationService.findAllReservations();
   }
 
-/**
+
+  @Roles(Role.ADMIN,Role.USER)
+  @UseGuards(JwtGuard,RolesGuard)
+  @Get('findReservation/:id')
+  findReservationById(@Param('id')id:string):Promise<ReservationDocument>{
+    return this.reservationService.findReservation(id);
+  }
+
+//test
+/** 
   @Roles(Role.ADMIN,Role.USER)
   @UseGuards(JwtGuard,RolesGuard)*/
-  @Get('findReservation/:id')
-  findService(@Param('id')id:string):Promise<ReservationDocument>{
-    return this.reservationService.findReservation(id);
+  @Get('findReservationByUser/:id')
+  findReservationByUser(@Param('user')user:string):Promise<ReservationDocument[]>{
+    return this.reservationService.findReservationForUser(user);
   }
 
   /**@Roles(Role.ADMIN)
@@ -52,8 +63,8 @@ export class ReservationController {
   }*/
 
 
- /** @Roles(Role.ADMIN)
-  @UseGuards(JwtGuard,RolesGuard)*/
+ @Roles(Role.ADMIN)
+  @UseGuards(JwtGuard,RolesGuard)
   @Delete('delete/:id')
   deleteReservation(@Param('id') id: string) {
     return this.reservationService.deleteReservation(id);

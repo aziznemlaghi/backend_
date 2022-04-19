@@ -9,7 +9,7 @@ export type ReservationDocument = Reservation & Document;
 @Schema()
 export class Reservation{
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'user' })
-    user: User;
+    userId: User;
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'service' })
     service: Service;
     @Prop({type: Date, required: true})

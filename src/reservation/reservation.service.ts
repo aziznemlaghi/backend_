@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import {InjectModel} from "@nestjs/mongoose";
+import mongoose from 'mongoose';
 import {Model} from "mongoose";
 import {ReservationDocument} from "./rservation.schema";
 
@@ -15,12 +16,17 @@ export class ReservationService {
   }
 
   async findAllReservations():Promise<ReservationDocument[]>{
-    return this.reservationModel.find().populate('userId');
+    return this.reservationModel.find().exec();
   }
 
   async findReservation(id : string) :Promise<ReservationDocument>{
     return this.reservationModel.findById(id).exec();
   }
+
+//test
+  async findReservationForUser(user: string):Promise<ReservationDocument[]> {
+    return this.reservationModel.find().where('userId').equals(user);}
+
 
   /**async updateReservation(
       id: string,
@@ -40,5 +46,7 @@ export class ReservationService {
   async deleteReservation(id: string) {
     return this.reservationModel.deleteOne({ _id: id }).exec();
   }
+
+
 
 }
