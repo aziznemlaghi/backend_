@@ -16,7 +16,7 @@ export class UserController {
     /**@Roles(Role.ADMIN,Role.USER)
      @UseGuards(JwtGuard,RolesGuard)*/
     @Get('findUsers')
-    findAllServices():Promise<UserDocument[]>{
+    findAllUsers():Promise<UserDocument[]>{
         return this.UserService.findAllUsers();
     }
 
@@ -27,7 +27,7 @@ export class UserController {
     updateUser(
         @Param('id') id: string,
         @Body('name') name: string,
-        @Body('phone') phone: number,
+        @Body('phone') phone?: number,
         @Body('email') email?: string,
     ): Promise<UserDocument> {
         return this.UserService.updateUser(id, name, phone, email);
@@ -35,8 +35,8 @@ export class UserController {
 
 
 
-    @Roles(Role.ADMIN)
-    @UseGuards(JwtGuard,RolesGuard)
+    /**@Roles(Role.ADMIN)
+    @UseGuards(JwtGuard,RolesGuard)*/
     @Get(':id')
     getUser(@Param('id') id : string):Promise<  UserDetails |null>{
         return this.UserService.findById(id);

@@ -8,7 +8,12 @@ import { ServiceModule } from './service/service.module';
 import {ReservationModule} from "./reservation/reservation.module";
 
 @Module({
-  imports: [UserModule,ReservationModule, AuthModule,MongooseModule.forRoot('mongodb+srv://root:root@cluster0.ircee.mongodb.net/users?retryWrites=true&w=majority'), ServiceModule],
+  imports: [UserModule,
+    ReservationModule,
+    AuthModule,
+    MongooseModule.forRoot('mongodb+srv://root:root@cluster0.ircee.mongodb.net/users?retryWrites=true&w=majority'),
+    ServiceModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

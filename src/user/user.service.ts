@@ -13,6 +13,7 @@ export class UserService {
 
     _getUserDetails(user: UserDocument): UserDetails {
         return {
+            id: user.id,
             phone: user.phone,
             name: user.name,
             email: user.email,
@@ -68,7 +69,7 @@ export class UserService {
     }
 
     async findAllUsers(): Promise<UserDocument[]> {
-        return this.userModel.find().exec();
+        return this.userModel.find().sort({ _id: -1 }).exec();
     }
 
 }

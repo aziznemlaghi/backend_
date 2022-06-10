@@ -12,14 +12,14 @@ export class ReservationController {
 
   constructor(private reservationService : ReservationService) {}
 
-  @Roles(Role.ADMIN)
-  @UseGuards(JwtGuard,RolesGuard)
+  /**@Roles(Role.ADMIN)
+  @UseGuards(JwtGuard,RolesGuard)*/
   @Post('add')
   createReservation(
       @Body('user') user : string,
       @Body('service') service :string,
       @Body('date') date : Date,
-      @Body('status') status : string
+      @Body('status') status ?: string
   ):Promise<ReservationDocument>{
     return this.reservationService.createReservation(user, service, date,status);
   }
@@ -34,33 +34,63 @@ export class ReservationController {
   }
 
 
-  @Roles(Role.ADMIN,Role.USER)
-  @UseGuards(JwtGuard,RolesGuard)
+  /**@Roles(Role.ADMIN,Role.USER)
+  @UseGuards(JwtGuard,RolesGuard)*/
   @Get('findReservation/:id')
   findReservationById(@Param('id')id:string):Promise<ReservationDocument>{
     return this.reservationService.findReservation(id);
   }
 
 //test
-/** 
-  @Roles(Role.ADMIN,Role.USER)
+
+  /**@Roles(Role.ADMIN,Role.USER)
   @UseGuards(JwtGuard,RolesGuard)*/
   @Get('findReservationByUser/:id')
-  findReservationByUser(@Param('user')user:string):Promise<ReservationDocument[]>{
-    return this.reservationService.findReservationForUser(user);
+  findReservationByUser(@Param('id')id:string):Promise<ReservationDocument[]>{
+    return this.reservationService.findReservationForUser(id);
   }
 
+
   /**@Roles(Role.ADMIN)
-  @UseGuards(JwtGuard,RolesGuard)
-  @Patch('updateReservation/:id')
-  updateService(
+  @UseGuards(JwtGuard,RolesGuard)*/
+  @Patch('acceptReservation/:id')
+  AcceptReservation(
       @Param('id') id: string,
       @Body('user') user: string,
       @Body('service') service: string,
+      @Body('status') status : string,
       @Body('date') date?: Date,
   ): Promise<ReservationDocument> {
-    return this.reservationService.updateReservation(id, user, service, date);
-  }*/
+    return this.reservationService.acceptReservation(id, user, service, date,status);
+  }
+
+
+  /**@Roles(Role.ADMIN)
+   @UseGuards(JwtGuard,RolesGuard)*/
+  @Patch('refuseReservation/:id')
+  refuseReservation(
+      @Param('id') id: string,
+      @Body('user') user: string,
+      @Body('service') service: string,
+      @Body('status') status : string,
+      @Body('date') date?: Date,
+  ): Promise<ReservationDocument> {
+    return this.reservationService.refuseReservation(id, user, service, date,status);
+  }
+
+
+  /**@Roles(Role.ADMIN)
+   @UseGuards(JwtGuard,RolesGuard)*/
+  @Patch('cancelReservation/:id')
+  CancelReservation(
+      @Param('id') id: string,
+      @Body('user') user: string,
+      @Body('service') service: string,
+      @Body('status') status?: string,
+      @Body('date') date?: Date,
+  ): Promise<ReservationDocument> {
+    return this.reservationService.cancelReservation(id, user, service, date,status);
+  }
 
 
  @Roles(Role.ADMIN)

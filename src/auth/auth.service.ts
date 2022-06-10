@@ -45,6 +45,7 @@ export class AuthService {
     async login(existingUser:ExistingUserDto):Promise<{token : string}|null>{
         const {email,password} =existingUser;
         const user= await this.validateUser(email,password);
+        console.log(user);
 
         if(!user) return null;
 

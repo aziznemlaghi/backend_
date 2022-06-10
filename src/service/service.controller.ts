@@ -11,8 +11,8 @@ export class ServiceController {
 
     constructor(private serviceService : ServiceService) {}
 
-    @Roles(Role.ADMIN)
-    @UseGuards(JwtGuard,RolesGuard)
+    /**@Roles(Role.ADMIN)
+    @UseGuards(JwtGuard,RolesGuard)*/
     @Post('addService')
     createService(
         @Body('name') name : string,
@@ -22,24 +22,24 @@ export class ServiceController {
         return this.serviceService.createService(name, price, description);
     }
 
-    @Roles(Role.ADMIN,Role.USER)
+    /**@Roles(Role.ADMIN,Role.USER)
     @UseGuards(JwtGuard,RolesGuard)
-    @UseGuards(JwtGuard,RolesGuard)
+    @UseGuards(JwtGuard,RolesGuard)*/
     @Get('findServices')
     findAllServices():Promise<ServiceDocument[]>{
         return this.serviceService.findAllServices();
     }
 
 
-    @Roles(Role.ADMIN,Role.USER)
-    @UseGuards(JwtGuard,RolesGuard)
+    /**@Roles(Role.ADMIN,Role.USER)
+    @UseGuards(JwtGuard,RolesGuard)*/
     @Get('findService/:id')
     findService(@Param('id')id:string):Promise<ServiceDocument>{
         return this.serviceService.findService(id);
     }
 
-    @Roles(Role.ADMIN)
-    @UseGuards(JwtGuard,RolesGuard)
+    /**@Roles(Role.ADMIN)
+    @UseGuards(JwtGuard,RolesGuard)*/
     @Patch('updateService/:id')
     updateService(
         @Param('id') id: string,
@@ -51,8 +51,8 @@ export class ServiceController {
     }
 
 
-    @Roles(Role.ADMIN)
-    @UseGuards(JwtGuard,RolesGuard)
+    /**@Roles(Role.ADMIN)
+    @UseGuards(JwtGuard,RolesGuard)*/
     @Delete('delete/:id')
     deleteService(@Param('id') id: string) {
         return this.serviceService.deleteService(id);

@@ -7,7 +7,8 @@ import {Reservation, ReservationSchema} from "./rservation.schema";
 import {UserSchema} from "../user/user.schema";
 
 @Module({
-  imports:[MongooseModule.forFeature([{name:'reservation',schema : ReservationSchema}])],
+  imports:[MongooseModule.forFeature([{name:'reservation',schema : ReservationSchema},
+    {name : 'user',schema:UserSchema},{name:'service',schema : ServiceSchema}])],
 
   controllers: [ReservationController],
   providers: [ReservationService]

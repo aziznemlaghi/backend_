@@ -9,9 +9,9 @@ export type ReservationDocument = Reservation & Document;
 @Schema()
 export class Reservation{
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'user' })
-    userId: User;
+    user: string;
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'service' })
-    service: Service;
+    service: string;
     @Prop({type: Date, required: true})
     date : Date;
     @Prop({required : true})

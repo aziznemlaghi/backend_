@@ -15,7 +15,7 @@ export class ServiceService {
     }
 
     async findAllServices():Promise<ServiceDocument[]>{
-        return this.serviceModel.find().exec();
+        return await this.serviceModel.find().sort({ _id: -1 }).exec();
     }
 
     async findService(id : string) :Promise<ServiceDocument>{
